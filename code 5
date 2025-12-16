@@ -1,0 +1,24 @@
+import os
+import datetime
+# Database credentials
+DB_NAME = "school_db"
+DB_USER = "postgres"
+DB_HOST = "localhost"
+# Backup file name with date & time
+backup_file = f"backup_{DB_NAME}_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.sql"
+try:
+    backup_command = f"pg_dump -U {DB_USER} -h {DB_HOST} {DB_NAME} > {backup_file}"
+    os.system(backup_command)
+    print("✅ DATABASE BACKUP COMPLETED")
+    print(f"📁 Backup File Created: {backup_file}")
+    print("\n⚠️ Simulating database failure...")
+    drop_command = f'psql -U {DB_USER} -h {DB_HOST} -c "DROP DATABASE {DB_NAME};"'
+    os.system(drop_command)
+    create_command = f'psql -U {DB_USER} -h {DB_HOST} -c "CREATE DATABASE {DB_NAME};"'
+    os.system(create_command)
+    print("❌ Database deleted (failure simulated)")
+    restore_command = f"psql -U {DB_USER} -h {DB_HOST} {DB_NAME} < {backup_file}"
+    os.system(restore_command)
+    print("🔄 DATABASE RECOVERY COMPLETED SUCCESSFULLY")
+except Exception as e:
+    print("❌ Error:", e)
