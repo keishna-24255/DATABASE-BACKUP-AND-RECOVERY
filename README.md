@@ -23,3 +23,4 @@ To ensure data safety and reliability
 🔹 Tools & Technologies
 
 #output
+<img width="451" height="82" alt="Image" src="https://github.com/user-attachments/assets/98b1a39c-8863-453c-ae5c-397e24c4cdb5" />
